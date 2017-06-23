@@ -2,6 +2,9 @@ CLOUDFORMATION_FILES=cloudformation/infrastructure.yaml \
                      cloudformation/pipeline.yaml \
                      cloudformation/s3-bucket.yaml
 
+GitHubUser=$(shell git remote -v | grep github | head -n1 | cut -d ':' -f2 | cut -d '/' -f1)
+GitHubRepository=$(shell git remote -v | grep github | head -n1 | cut -d ':' -f2 | cut -d '/' -f2 | cut -d '.' -f1)
+ArtifactS3Bucket=${GitHubUser}-${GitHubRepository}-artifacts
 AWS_PROFILE=--profile priv-admin
 
 validate:
@@ -15,3 +18,17 @@ create-artifact-bucket:
 		--parameters \
  	    	"ParameterKey=BucketName,ParameterValue=${ArtifactS3Bucket}" \
  	   ${AWS_PROFILE}
+
+create-stack:
+	@echo $@
+	aws cloudformation create-stack --capabilities  CAPABILITY_NAMED_IAM \
+ 	   --stack-name ${GitHubRepository} \
+ 	   --template-body file://cloudformation/pipeline.yaml \
+ 	   --parameters \
+ 	   		"ParameterKey=ApplicationName,ParameterValue=${GitHubRepository}" \
+ 	    	"ParameterKey=GitHubUser,ParameterValue=${GitHubUser}" \
+ 	    	"ParameterKey=ArtifactS3Bucket,ParameterValue=${ArtifactS3Bucket}" \
+ 	    	"ParameterKey=GitHubOAuthToken,ParameterValue=${GitHubOAuthToken}" \
+ 	    	"ParameterKey=GitHubRepository,ParameterValue=${GitHubRepository}" \
+ 	   ${AWS_PROFILE}
+
