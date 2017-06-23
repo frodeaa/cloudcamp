@@ -11,7 +11,7 @@ validate:
 	@echo $(CLOUDFORMATION_FILES) | xargs -n1 -t -I{} \
 	aws cloudformation validate-template --template-body file://{}
 
-create-artifact-bucket:
+create-s3-stack:
 	aws cloudformation create-stack \
 		--stack-name ${ArtifactS3Bucket} \
 		--template-body file://cloudformation/s3-bucket.yaml ${AWS_OPTS} \

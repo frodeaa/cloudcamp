@@ -21,5 +21,10 @@ containerized
 
 Create the whole setup with
 
-    GitHubOAuthToken=xxxx make create-artifact-bucket create-stack
+    GitHubOAuthToken=xxxx make create-s3-stack create-stack
 
+## Cleanup
+
+    make delete-stack
+    # note the s3 bucket stack will not be delete as
+    # it will contain build files
