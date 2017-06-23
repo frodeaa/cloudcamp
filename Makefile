@@ -19,9 +19,8 @@ create-artifact-bucket:
  	    	"ParameterKey=BucketName,ParameterValue=${ArtifactS3Bucket}" \
  	   ${AWS_PROFILE}
 
-create-stack:
-	@echo $@
-	aws cloudformation create-stack --capabilities  CAPABILITY_NAMED_IAM \
+%-stack:
+	aws cloudformation $@ --capabilities  CAPABILITY_NAMED_IAM \
  	   --stack-name ${GitHubRepository} \
  	   --template-body file://cloudformation/pipeline.yaml \
  	   --parameters \
@@ -31,4 +30,3 @@ create-stack:
  	    	"ParameterKey=GitHubOAuthToken,ParameterValue=${GitHubOAuthToken}" \
  	    	"ParameterKey=GitHubRepository,ParameterValue=${GitHubRepository}" \
  	   ${AWS_PROFILE}
-

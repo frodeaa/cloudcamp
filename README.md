@@ -13,3 +13,13 @@ containerized
  - [EC2 Container Servier](https://aws.amazon.com/ecs/)
  - [Elastic Load Balancing](https://aws.amazon.com/elasticloadbalancing)
 
+## Requirements
+
+ - [AWS Command Line Interface](https://aws.amazon.com/cli/) (aws)
+
+## Getting started
+
+Create the whole setup with
+
+    GitHubOAuthToken=xxxx make create-artifact-bucket create-stack
+
