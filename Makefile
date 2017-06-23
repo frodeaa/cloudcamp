@@ -30,3 +30,6 @@ create-artifact-bucket:
  	    	"ParameterKey=GitHubOAuthToken,ParameterValue=${GitHubOAuthToken}" \
  	    	"ParameterKey=GitHubRepository,ParameterValue=${GitHubRepository}" \
  	   ${AWS_PROFILE}
+
+delete-stack:
+	aws cloudformation delete-stack --stack-name ${GitHubRepository} ${AWS_PROFILE}
