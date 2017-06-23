@@ -1,0 +1,15 @@
+Description: >
+  Create s3 bucket
+
+Parameters:
+  BucketName:
+    Description: The name of the bucket
+    Type: String
+
+
+Resources:
+  Bukket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+
